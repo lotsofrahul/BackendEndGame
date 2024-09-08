@@ -8,6 +8,6 @@ const UserSchema = mongoose.Schema({
     username : String,
     name : String,
     age : Number
-})
+});
 
 module.exports = mongoose.model("users", UserSchema);

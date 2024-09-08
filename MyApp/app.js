@@ -4,9 +4,11 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require('express-session');
+var flash = require('connect-flash');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var passport = require('passport');
 
 var app = express();
 
@@ -19,6 +21,14 @@ app.use(session({
   saveUninitialized : false,
   secret : "this is my secret"
 }));
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.serializeUser(usersRouter.serializeUser());
+passport.deserializeUser(usersRouter.deserializeUser());
+
+app.use(flash());
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
